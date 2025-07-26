@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'MyScaffold.dart';
+import 'AppBar.dart';
 import 'MyText.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyText(),
+      home: const Appbar(),
     );
   }
 }
