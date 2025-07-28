@@ -45,6 +45,9 @@ class MyButton_2 extends StatelessWidget {
               onTap: () {
                 print("InkWell được nhấn");
               },
+              onDoubleTap: () {
+                print("Double Tap");
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: 20,
@@ -55,7 +58,16 @@ class MyButton_2 extends StatelessWidget {
                 ),
                 child: Text("Button tùy chỉnh với InkWell"),
               ),
-            )
+            ),
+
+            SizedBox(height: 50,),
+            TextButton.icon(
+                onPressed: () {
+                  print("Text btn Icon");
+                },
+                icon: Icon(Icons.favorite),
+                label: Text("Yêu thích")
+            ),
           ],
         ),
       ),
