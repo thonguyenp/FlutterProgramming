@@ -38,6 +38,24 @@ class MyButton_2 extends StatelessWidget {
                 elevation: 15,
               ),
             ),
+            // InkWell
+            //Ko phải là btn nhưng cho tạo hiệu ứng gợn sóng (ripple effect) khi nhấn vào widget
+            SizedBox(height: 50,),
+            InkWell(
+              onTap: () {
+                print("InkWell được nhấn");
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blueAccent),
+                ),
+                child: Text("Button tùy chỉnh với InkWell"),
+              ),
+            )
           ],
         ),
       ),
