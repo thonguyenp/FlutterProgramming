@@ -44,7 +44,57 @@ class MyTextField extends StatelessWidget {
                     filled: true,
                     fillColor: Colors.greenAccent,
                   ),
+                  keyboardType: TextInputType.emailAddress,
+                ),
 
+                SizedBox(height: 30,),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "Số điện thoại",
+                    hintText: "Nhập vào SDT của bạn",
+                    border: OutlineInputBorder(),
+                  ),
+                  // Thay đổi dạng bàn phím
+                  keyboardType: TextInputType.phone,
+                ),
+                SizedBox(height: 30,),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "Ngày sinh",
+                    hintText: "Nhập vào ngày sinh của bạn",
+                    border: OutlineInputBorder(),
+                  ),
+                  // Thay đổi dạng bàn phím
+                  keyboardType: TextInputType.datetime,
+                ),
+                SizedBox(height: 10,),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "Mật khẩu",
+                    border: OutlineInputBorder(),
+                  ),
+                  // Thay đổi dạng bàn phím
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  obscuringCharacter: '*',
+                ),
+
+                SizedBox(height: 10,),
+                TextField(
+                  // onChanged: (value)
+                  // {
+                  //   print("Đang nhập vào $value");
+                  // },
+                  onSubmitted: (value)
+                  {
+                    print("Đã hoàn thành nội dung $value");
+                  },
+                  decoration: InputDecoration(
+                    labelText: "Câu hỏi bí mật",
+                    border: OutlineInputBorder(),
+                  ),
+                  // Thay đổi dạng bàn phím
+                  keyboardType: TextInputType.visiblePassword,
                 ),
               ],
             )
