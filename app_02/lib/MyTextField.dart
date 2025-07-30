@@ -100,7 +100,7 @@ class MyTextField extends StatelessWidget {
             )
           )
 
-    ),
+      ),
 
       floatingActionButton: FloatingActionButton(
           onPressed: (){print("Pressed");},
