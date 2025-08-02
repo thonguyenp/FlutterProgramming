@@ -1,6 +1,9 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app_project/models/category_model.dart';
 import 'package:news_app_project/services/data.dart';
+import 'package:news_app_project/models/slider_model.dart';
+import 'package:news_app_project/services/slider_data.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,11 +14,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<CategoryModel> categories = [];
+  List<silderModel> sliders = [];
 
   @override
   void initState() {
     // TODO: implement initState
     categories = getCategories();
+    sliders = getSliders();
     super.initState();
   }
 
@@ -41,6 +46,7 @@ class _HomeState extends State<Home> {
         child: Column(
           children: [
             Container(
+              margin: EdgeInsets.only(left: 18.0),
               height: 70,
               child: ListView.builder(
                 shrinkWrap: true,
@@ -54,6 +60,10 @@ class _HomeState extends State<Home> {
                 },
               ),
             ),
+            CarouselSlider.builder(
+                itemCount: itemCount,
+                itemBuilder: itemBuilder,
+                options: options)
           ],
         ),
       ),
@@ -74,12 +84,12 @@ class CategoryTile extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
-            child: Image.asset(image, width: 120, height: 60, fit: BoxFit.cover),
+            child: Image.asset(image, width: 120, height: 70, fit: BoxFit.cover),
           ),
           Container(
             width: 120,
-            height: 60,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: Colors.black26),
+            height: 70,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: Colors.black38),
             child: Center(child: Text(categoryName, style: TextStyle(color:  Colors.white, fontSize: 14, fontWeight: FontWeight.w500),))
           )
         ],
