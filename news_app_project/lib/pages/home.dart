@@ -15,6 +15,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<CategoryModel> categories = [];
   List<silderModel> sliders = [];
+  int activeIndex = 0;
 
   @override
   void initState() {
@@ -22,6 +23,46 @@ class _HomeState extends State<Home> {
     categories = getCategories();
     sliders = getSliders();
     super.initState();
+  }
+
+  Widget? buildImage(String image, int index, String name) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: Image.asset(
+              image,
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width,
+              height: 250,
+            ),
+          ),
+          Container(
+            height: 250,
+            padding: EdgeInsets.only(left: 10),
+            margin: EdgeInsets.only(top: 170),
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Colors.black26,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
+            ),
+            child: Text(
+              name,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -60,10 +101,26 @@ class _HomeState extends State<Home> {
                 },
               ),
             ),
+            SizedBox(height: 30),
             CarouselSlider.builder(
-                itemCount: itemCount,
-                itemBuilder: itemBuilder,
-                options: options)
+              itemCount: sliders.length,
+              itemBuilder: (context, index, realIndex) {
+                String? res = sliders[index].image;
+                String? res1 = sliders[index].name;
+                return buildImage(res!, index, res1!)!;
+              },
+              options: CarouselOptions(
+                height: 250,
+                autoPlay: true,
+                enlargeCenterPage: true,
+                enlargeStrategy: CenterPageEnlargeStrategy.height,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    activeIndex = index;
+                  });
+                },
+              ),
+            ),
           ],
         ),
       ),
@@ -84,14 +141,31 @@ class CategoryTile extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
-            child: Image.asset(image, width: 120, height: 70, fit: BoxFit.cover),
+            child: Image.asset(
+              image,
+              width: 120,
+              height: 70,
+              fit: BoxFit.cover,
+            ),
           ),
           Container(
             width: 120,
             height: 70,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: Colors.black38),
-            child: Center(child: Text(categoryName, style: TextStyle(color:  Colors.white, fontSize: 14, fontWeight: FontWeight.w500),))
-          )
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: Colors.black38,
+            ),
+            child: Center(
+              child: Text(
+                categoryName,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
