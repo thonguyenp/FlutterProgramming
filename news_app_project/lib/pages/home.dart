@@ -86,6 +86,7 @@ class _HomeState extends State<Home> {
       ),
       body: Container(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               margin: EdgeInsets.only(left: 18.0),
@@ -103,6 +104,17 @@ class _HomeState extends State<Home> {
               ),
             ),
             SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Breaking News!", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),
+                  Text("View All", style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: 16)),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
             CarouselSlider.builder(
               itemCount: sliders.length,
               itemBuilder: (context, index, realIndex) {
@@ -123,7 +135,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             SizedBox(height: 30),
-            buildIndicator(),
+            Center(child: buildIndicator()),
           ],
         ),
       ),
@@ -134,6 +146,11 @@ class _HomeState extends State<Home> {
     return AnimatedSmoothIndicator(
       activeIndex: activeIndex,
       count: sliders.length,
+      effect: SlideEffect(
+        dotWidth: 20,
+        dotHeight: 20,
+        activeDotColor: Colors.blueAccent,
+      ),
     );
   }
 }
