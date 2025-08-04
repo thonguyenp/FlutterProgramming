@@ -136,6 +136,19 @@ class _HomeState extends State<Home> {
             ),
             SizedBox(height: 30),
             Center(child: buildIndicator()),
+            SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Trending News!", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),
+                  Text("View All", style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500, fontSize: 16)),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+
           ],
         ),
       ),
