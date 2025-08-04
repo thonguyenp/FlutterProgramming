@@ -4,6 +4,7 @@ import 'package:news_app_project/models/category_model.dart';
 import 'package:news_app_project/services/data.dart';
 import 'package:news_app_project/models/slider_model.dart';
 import 'package:news_app_project/services/slider_data.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -121,9 +122,18 @@ class _HomeState extends State<Home> {
                 },
               ),
             ),
+            SizedBox(height: 30),
+            buildIndicator(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildIndicator() {
+    return AnimatedSmoothIndicator(
+      activeIndex: activeIndex,
+      count: sliders.length,
     );
   }
 }
