@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app_project/models/article_model.dart';
 import 'package:news_app_project/models/category_model.dart';
 import 'package:news_app_project/services/data.dart';
 import 'package:news_app_project/models/slider_model.dart';
+import 'package:news_app_project/services/news.dart';
 import 'package:news_app_project/services/slider_data.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -16,6 +19,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<CategoryModel> categories = [];
   List<silderModel> sliders = [];
+  List<ArticleModel> articles = [];
+  bool _loading = true;
+
   int activeIndex = 0;
 
   @override
@@ -23,7 +29,18 @@ class _HomeState extends State<Home> {
     // TODO: implement initState
     categories = getCategories();
     sliders = getSliders();
+    getNews();
     super.initState();
+  }
+
+  getNews() async
+  {
+    News newsClass = News();
+    await newsClass.getNews();
+    articles = newsClass.news;
+    setState(() {
+      _loading = false;
+    });
   }
 
   Widget? buildImage(String image, int index, String name) {
@@ -84,7 +101,7 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
+      body: _loading? Center(child: CircularProgressIndicator()): SingleChildScrollView(
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,49 +220,14 @@ class _HomeState extends State<Home> {
                 ),
               ),
               SizedBox(height: 10.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Material(
-                  elevation: 3,
-                  borderRadius: BorderRadius.circular(10),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.asset("images/business.png", height: 150,
-                              width: 150,
-                              fit: BoxFit.cover,),
-                          ),
-                        ),
-                        SizedBox(width: 3.0,),
-                        Column(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width/1.8,
-                              child: Text("Name of News", style: TextStyle(color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 17)),
-                            ),
-                            SizedBox(height: 7,),
-                            Container(
-                              width: MediaQuery.of(context).size.width/1.8,
-                              child: Text("Some Description", style: TextStyle(color: Colors.black54,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15)),
-                            ),
-        
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-        
+              Container(
+                child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                   shrinkWrap: true, itemCount: articles.length, itemBuilder: (context, index) {
+                  return BlogTile(articles[index].urlToImage!, articles[index].title!,
+                      articles[index].description!);
+                }),
+              )
             ],
           ),
         ),
@@ -305,6 +287,65 @@ class CategoryTile extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+class BlogTile extends StatelessWidget {
+  String imageUrl, title, desc;
+
+  BlogTile(this.imageUrl, this.title, this.desc);
+
+  @override
+  Widget build(BuildContext context) {
+    return
+      GestureDetector(
+      onTap: () {
+
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Material(
+          elevation: 3,
+          borderRadius: BorderRadius.circular(10),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      height: 150,
+                      width: 150,
+                      fit: BoxFit.cover,),
+                  ),
+                ),
+                SizedBox(width: 3.0,),
+                Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width/1.8,
+                      child: Text(title , style: TextStyle(color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 17)),
+                    ),
+                    SizedBox(height: 7,),
+                    Container(
+                      width: MediaQuery.of(context).size.width/1.8,
+                      child: Text(desc, style: TextStyle(color: Colors.black54,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15)),
+                    ),
+
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
