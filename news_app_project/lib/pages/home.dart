@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app_project/models/article_model.dart';
 import 'package:news_app_project/models/category_model.dart';
+import 'package:news_app_project/pages/article_view.dart';
 import 'package:news_app_project/services/data.dart';
 import 'package:news_app_project/models/slider_model.dart';
 import 'package:news_app_project/services/news.dart';
@@ -205,6 +206,7 @@ class _HomeState extends State<Home> {
                             articles[index].urlToImage!,
                             articles[index].title!,
                             articles[index].description!,
+                            articles[index].url!,
                           );
                         },
                       ),
@@ -274,14 +276,16 @@ class CategoryTile extends StatelessWidget {
 }
 
 class BlogTile extends StatelessWidget {
-  String imageUrl, title, desc;
+  String imageUrl, title, desc, url;
 
-  BlogTile(this.imageUrl, this.title, this.desc);
+  BlogTile(this.imageUrl, this.title, this.desc, this.url);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ArticleView(url)));
+      },
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
         child: Padding(
