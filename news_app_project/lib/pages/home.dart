@@ -9,7 +9,7 @@ import 'package:news_app_project/models/slider_model.dart';
 import 'package:news_app_project/services/news.dart';
 import 'package:news_app_project/services/slider_data.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
+import 'package:news_app_project/services/slider_data.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -19,7 +19,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<CategoryModel> categories = [];
-  List<silderModel> sliders = [];
+  List<sliderModel> sliders = [];
   List<ArticleModel> articles = [];
   bool _loading = true;
 
@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     categories = getCategories();
-    sliders = getSliders();
+    getSliders();
     getNews();
     super.initState();
   }
@@ -43,6 +43,13 @@ class _HomeState extends State<Home> {
     });
   }
 
+  getSliders () async
+  {
+    Sliders slider = Sliders();
+    await slider.getSlider();
+    sliders = slider.sliders;
+  }
+
   Widget? buildImage(String image, int index, String name) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
@@ -50,11 +57,11 @@ class _HomeState extends State<Home> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
-            child: Image.asset(
-              image,
+            child: CachedNetworkImage(
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width,
               height: 250,
+              imageUrl: image,
             ),
           ),
           Container(
@@ -71,6 +78,7 @@ class _HomeState extends State<Home> {
             ),
             child: Text(
               name,
+              maxLines: 2,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -150,10 +158,10 @@ class _HomeState extends State<Home> {
                     ),
                     SizedBox(height: 20),
                     CarouselSlider.builder(
-                      itemCount: sliders.length,
+                      itemCount: 8,
                       itemBuilder: (context, index, realIndex) {
-                        String? res = sliders[index].image;
-                        String? res1 = sliders[index].name;
+                        String? res = sliders[index].urlToImage;
+                        String? res1 = sliders[index].title;
                         return buildImage(res!, index, res1!)!;
                       },
                       options: CarouselOptions(
@@ -221,7 +229,7 @@ class _HomeState extends State<Home> {
   Widget buildIndicator() {
     return AnimatedSmoothIndicator(
       activeIndex: activeIndex,
-      count: sliders.length,
+      count: 8,
       effect: SlideEffect(
         dotWidth: 20,
         dotHeight: 20,
@@ -276,7 +284,7 @@ class CategoryTile extends StatelessWidget {
 }
 
 class BlogTile extends StatelessWidget {
-  String imageUrl, title, desc, url;
+  final String imageUrl, title, desc, url;
 
   BlogTile(this.imageUrl, this.title, this.desc, this.url);
 

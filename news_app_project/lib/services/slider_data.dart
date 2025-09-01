@@ -1,24 +1,30 @@
+import 'package:news_app_project/models/article_model.dart';
+//2 dòng này để dùng gói http
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 import 'package:news_app_project/models/slider_model.dart';
-
-List<silderModel> getSliders()
+class Sliders
 {
-  List<silderModel> slider = [];
-  silderModel categoryModel = new silderModel();
+  List<sliderModel> sliders =[];
 
-  categoryModel.image = "images/business.png";
-  categoryModel.name = "Bow to The Authority of SilentForce";
-  slider.add(categoryModel);
-  categoryModel = new silderModel();
+  //   Dùng Future để lấy slider
+  Future<void> getSlider () async
+  {
+    //Check nếu url get quá nhiều bài báo thì đổi url khác
+    String url = "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=eb7ef361cb804e51a0c4b7f492bf088c";
+    var response = await http.get(Uri.parse(url));
+    var jsonData = convert.jsonDecode(response.body);
 
-  categoryModel.image = "images/business.png";
-  categoryModel.name = "Bow to The Authority of SilentForce";
-  slider.add(categoryModel);
-  categoryModel = new silderModel();
-
-  categoryModel.image = "images/business.png";
-  categoryModel.name = "Bow to The Authority of SilentForce";
-  slider.add(categoryModel);
-  categoryModel = new silderModel();
-
-  return slider;
+    if (jsonData['status'] == 'ok')
+    {
+      jsonData["articles"].forEach((e) {
+        if (e["urlToImage"] != null && e['description'] != null)
+        {
+          sliderModel slider = sliderModel(e["author"],e["title"],
+              e["description"],e["url"],e["urlToImage"],e["content"]);
+          sliders.add(slider);
+        }
+      });
+    }
+  }
 }

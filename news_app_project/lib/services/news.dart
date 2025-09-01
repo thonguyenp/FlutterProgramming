@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:news_app_project/models/article_model.dart';
 //2 dòng này để dùng gói http
 import 'package:http/http.dart' as http;
@@ -11,7 +9,8 @@ class News
 //   Dùng Future để lấy news
   Future<void> getNews () async
   {
-    String url = "https://newsapi.org/v2/everything?q=tesla&from=2025-07-31&sortBy=publishedAt&apiKey=eb7ef361cb804e51a0c4b7f492bf088c";
+    //Check nếu url get quá nhiều bài báo thì đổi url khác
+    String url = "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=eb7ef361cb804e51a0c4b7f492bf088c";
     var response = await http.get(Uri.parse(url));
     var jsonData = convert.jsonDecode(response.body);
 
