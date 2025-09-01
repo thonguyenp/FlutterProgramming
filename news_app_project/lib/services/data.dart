@@ -10,22 +10,22 @@ List<CategoryModel> getCategories()
   category.add(categoryModel);
   categoryModel = new CategoryModel();
 
-  categoryModel.categoryName = "Business";
+  categoryModel.categoryName = "Entertainment";
   categoryModel.image = "images/business.png";
   category.add(categoryModel);
   categoryModel = new CategoryModel();
 
-  categoryModel.categoryName = "Business";
+  categoryModel.categoryName = "General";
   categoryModel.image = "images/business.png";
   category.add(categoryModel);
   categoryModel = new CategoryModel();
 
-  categoryModel.categoryName = "Business";
+  categoryModel.categoryName = "Health";
   categoryModel.image = "images/business.png";
   category.add(categoryModel);
   categoryModel = new CategoryModel();
 
-  categoryModel.categoryName = "Business";
+  categoryModel.categoryName = "Sports";
   categoryModel.image = "images/business.png";
   category.add(categoryModel);
   categoryModel = new CategoryModel();
