@@ -11,7 +11,7 @@ List<CategoryModel> getCategories()
   categoryModel = new CategoryModel();
 
   categoryModel.categoryName = "Entertainment";
-  categoryModel.image = "images/business.png";
+  categoryModel.image = "images/entertainment.jpg";
   category.add(categoryModel);
   categoryModel = new CategoryModel();
 
@@ -21,12 +21,12 @@ List<CategoryModel> getCategories()
   categoryModel = new CategoryModel();
 
   categoryModel.categoryName = "Health";
-  categoryModel.image = "images/business.png";
+  categoryModel.image = "images/health.jpg";
   category.add(categoryModel);
   categoryModel = new CategoryModel();
 
   categoryModel.categoryName = "Sports";
-  categoryModel.image = "images/business.png";
+  categoryModel.image = "images/sport.jpg";
   category.add(categoryModel);
   categoryModel = new CategoryModel();
 
